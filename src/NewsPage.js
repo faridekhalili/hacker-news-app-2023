@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef } from 'react'
+import React, {useState, useEffect } from 'react'
 import axios from 'axios';
 import NewsCard from './components/NewsCard'
 import ReactPaginate from 'react-paginate';
@@ -9,7 +9,7 @@ const NewsPage = () => {
   const [ isLoading, setIsLoading] = useState(true);
   const [ totalPages, setTotalPages ] = useState(0);
   const [ query, setQuery ] = useState("");
-  const searchInputRef = useRef("");
+  const [ searchInput, setSearchInput ] = useState("");
 
   const handlePageClick = (event) => {
 		console.log(event);
@@ -20,7 +20,7 @@ const NewsPage = () => {
    const handleSubmit = (event) => {
 		event.preventDefault();
 		setCurrentPage(0);
-		setQuery(searchInputRef.current.value);
+		setQuery(searchInput);
    };
 
   useEffect(() => {
@@ -55,7 +55,8 @@ const NewsPage = () => {
       {/*  Search */}
       <form className='search-form' onSubmit={handleSubmit}>
         <input placeholder='Search for new news'
-        ref={searchInputRef}
+        value={searchInput}
+        onChange={event => setSearchInput(event.target.value)}
         />
         <button type='submit'>Search</button>
       </form>
